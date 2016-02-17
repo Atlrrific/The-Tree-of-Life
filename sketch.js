@@ -3,6 +3,13 @@
 // http://www.learningprocessing.com
 value = 0;
 //Le texts:
+
+var arbol = "A Tree of Life (Spanish: Árbol de la vida) is a theme of clay sculpture created in " +
+"central Mexico, especially in the municipality of Metepec, State of Mexico. The image depicted "+
+"in these sculptures originally was for "+
+"the teaching of the Biblical story of creation to natives in the early colonial period."+
+'<a  href="https://en.wikipedia.org/wiki/Phylogenetic_tree"> Tree of Life (craft) </a>'
+
 var feynard = "A diagram showing electromagnetic interactions between subatomic particles."+
 '<a href="https://en.wikipedia.org/wiki/Feynman_diagram">Wikipedia Article</a>'
 // var treeOfLife = ""
@@ -92,7 +99,6 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   stroke(0);
   fill(150);
-  textFont("Helvetica");
 
   img  =  loadGif("./assets/index.gif");
   var xOffset = width/(numImagesSideX);
@@ -129,7 +135,16 @@ function setup() {
   dDali = new diagramWithImage(width/2, width-xOffset, 0,height/2,"./assets/daliTree.jpg",daliColor,"The Three Sphinxes of Bikini",daliTree );
 
   dBio2 = new diagramWithImage(width/2, width-xOffset, height/2,height,"./assets/biologytree.png",backColor,"Phylogenetic Tree",bioTree );
+  dArbol = new diagramWithImage(width-xOffset,width, height/2,height,"./assets/arbol.jpg",backColor,"Arbol de La Vida",arbol );
+
+
+  myLink = createA('./assets/lepdf.pdf', 'About.pdf');
+  myLink.position(width/2 - width/(3*2), height/1.6);
+  myLink.class('link');
 }
+
+
+
 
 function draw() {
 
@@ -137,6 +152,8 @@ function draw() {
   // image(img, 0, 0);
   if(value == 0){
     image(img, 0, 0,width,height);
+
+    textFont("Neucha");
 
     c = color(19, 57, 69,150)
     fill(c);
@@ -146,20 +163,27 @@ function draw() {
     rect(0, 0,width,height);
 
     fill(255)
-    textSize(40);
+    textSize(50);
     title  = "Welcome to the Tree of Life";
     titleWidth  =  textWidth(title);
     s = text(title, width/2 - titleWidth/2 , height/3);
 
-    textAlign(CENTER);
+
+    textAlign(LEFT);
     fill(197, 204, 204);
-    instructions = "Hover your mouse to explore the tree representations, press i to get info about the particular representation"
+
+    textFont("Open Sans");
+
+    instructions = "1. Hover your mouse to explore the tree representations.\n"+
+    "2. Press 'i' to get info about the particular representation\n"+
+    "3. Enjoy and learn"
     instructionsWidth = textWidth(instructions);
     textSize(20);
-    instructions = text(instructions, width/2 - width/(3*2), height/2, width/3);
+    instructions = text(instructions, width/2 - width/(3*2), height/2.2, width/3);
     box.hide();
 
   }else{
+    myLink.remove();
     box.show();
     //for first Diagram:
     display = mouseOnLocation(  dPhysics.rightX ,dPhysics.leftX,dPhysics.topY,dPhysics.bottomY)
@@ -192,7 +216,7 @@ function draw() {
       background(disneyVid.backgroundColor);
       box.html (disneyVid.textDescription);
       disneyVid.vid.show();
-      disneyVid.vid.position(width/4, height/4);
+      disneyVid.vid.position(width/2 - 560/2,height/2 - 315/2);
       // image(dBio1.dimg, (width/2)-dBio1.dimg.width/4, (height/2)- dBio1.dimg.height/4,dBio1.dimg.width/2,dBio1.dimg.height/2);
     }else{
       disneyVid.vid.hide();
@@ -233,6 +257,16 @@ function draw() {
       background(dBio2.backgroundColor);
       box.html (dBio2.textDescription);
       image(dBio2.dimg, (width/2)-dBio2.dimg.width/4, (height/2)- dBio2.dimg.height/4, dBio2.dimg.width/2, dBio2.dimg.height/2);
+    }
+
+    //for first Diagram:
+    arbolDisplay = mouseOnLocation( dArbol.rightX ,dArbol.leftX,dArbol.topY,dArbol.bottomY);
+    if(arbolDisplay){
+      console.log("ARBOL");
+      boxPosition = 0;
+      background(dArbol.backgroundColor);
+      box.html (dArbol.textDescription);
+      image(dArbol.dimg, (width/2)-dArbol.dimg.width/2, (height/2)- dArbol.dimg.height/2);
     }
 
     if(boxPosition == 1){
